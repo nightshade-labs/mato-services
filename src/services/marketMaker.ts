@@ -1,5 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Mato } from "../anchor/types/mato.js";
+import { logger } from "../utils/logger.js";
 
 export class MarketMakerService {
   private program: anchor.Program<Mato>;
@@ -17,13 +18,18 @@ export class MarketMakerService {
     if (this.interval) {
       clearInterval(this.interval);
     }
+    logger.info("Market maker stopping...");
   }
 
   private async provideLiquidity() {
     try {
       await this.program.methods.withdrawSwappedTokenA();
     } catch (error) {
-      console.error("Transaction error:", error);
+      logger.error("Fatal error in market making", {
+        error: (error as Error).message,
+      });
+      this.stop();
+      process.exit(1);
     }
   }
 }
