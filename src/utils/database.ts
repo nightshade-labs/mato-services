@@ -51,12 +51,6 @@ export class Database {
       await client.query(`
         SELECT create_hypertable('market_data', 'time', if_not_exists => TRUE);
       `);
-
-      // Create indexes for better query performance
-      await client.query(`
-        CREATE INDEX IF NOT EXISTS idx_market_data_market ON market_data(market);
-        CREATE INDEX IF NOT EXISTS idx_market_data_slot ON market_data(slot);
-      `);
     } catch (error) {
       logger.error("Error setting up database", { error: error });
       throw error;
