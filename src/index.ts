@@ -4,10 +4,11 @@ import { createProgram } from "./anchor/program.js";
 import { MarketMakerService } from "./services/marketMaker.js";
 import { logger } from "./utils/logger.js";
 import { DataFetcherService } from "./services/dataFetcher.js";
+import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes/index.js";
 
-const loadWallet = (privateKeyString: string): anchor.Wallet => {
-  const privateKey = Buffer.from(privateKeyString, "base64");
-  const keypair = Keypair.fromSecretKey(privateKey);
+const loadWallet = (privateKeyBase58: string): anchor.Wallet => {
+  const privateKey = bs58.decode(privateKeyBase58);
+  const keypair = Keypair.fromSecretKey(new Uint8Array(privateKey));
   return new anchor.Wallet(keypair);
 };
 
@@ -17,7 +18,10 @@ const prices = new PublicKey("Dpe9rm2NFSTowGbvrwXccbW7FtGfrQCdu6ogugNW6akK");
 async function main() {
   // Initialize connection and wallet
   const connection = new Connection(clusterApiUrl("devnet"));
-  const wallet = loadWallet(process.env.SOLANA_PRIVATE_KEY!);
+  // const wallet = loadWallet(process.env.SOLANA_PRIVATE_KEY!);
+  const wallet = loadWallet(
+    "55M9J2bYYcFTKE4Aa8YnVzz8k2Nt91x2V8Cxb2zEeFJz7C4uaSMazYa4MvkhdVyt9ygd8hHNNKuYV2ahUkK48iJ4"
+  );
 
   // Create Anchor program
   const program = createProgram(connection, wallet);
