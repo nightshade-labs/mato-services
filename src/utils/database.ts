@@ -67,9 +67,6 @@ export class Database {
       const query = `
         INSERT INTO market_data (time, market, slot, flow_a, flow_b)
         VALUES ($1, $2, $3, $4, $5)
-        DO UPDATE SET
-          flow_a = EXCLUDED.flow_a,
-          flow_b = EXCLUDED.flow_b;
       `;
 
       for (const record of data) {
