@@ -52,7 +52,7 @@ export class DataFetcherService {
           logger.error("Error in indexing cycle", {
             error: (error as Error).message,
           });
-          await new Promise((resolve) => setTimeout(resolve, 5000));
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
     } catch (error) {
