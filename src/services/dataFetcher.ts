@@ -46,13 +46,13 @@ export class DataFetcherService {
             processingTime,
           });
 
-          const sleepTime = Math.max(0, 5000 - processingTime);
+          const sleepTime = Math.max(0, 1000 - processingTime);
           await new Promise((resolve) => setTimeout(resolve, sleepTime));
         } catch (error) {
           logger.error("Error in indexing cycle", {
             error: (error as Error).message,
           });
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 5000));
         }
       }
     } catch (error) {
