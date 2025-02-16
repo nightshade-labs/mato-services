@@ -52,22 +52,6 @@ export class Database {
         SELECT create_hypertable('market_data', 'time', if_not_exists => TRUE);
       `);
 
-      // 1. Check if the retention policy already exists
-      const checkPolicy = await client.query(`
-      SELECT market_data
-      FROM timescaledb_information.drop_chunks_policies
-    `);
-
-      // 2. If no policy is found, add it
-      if (checkPolicy.rowCount === 0) {
-        await client.query(`
-        SELECT add_retention_policy('market_data', INTERVAL '30 days');
-      `);
-        console.log("Retention policy added.");
-      } else {
-        console.log("Retention policy already exists. Skipping...");
-      }
-
       await client.query(`
 SELECT add_retention_policy('market_data', INTERVAL '30 days');`);
     } catch (error) {
