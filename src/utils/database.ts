@@ -51,9 +51,6 @@ export class Database {
       await client.query(`
         SELECT create_hypertable('market_data', 'time', if_not_exists => TRUE);
       `);
-
-      await client.query(`
-SELECT add_retention_policy('market_data', INTERVAL '30 days');`);
     } catch (error) {
       logger.error("Error setting up database", { error: error });
       throw error;
