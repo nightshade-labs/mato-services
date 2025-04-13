@@ -12,8 +12,8 @@ const loadWallet = (privateKeyBase58: string): anchor.Wallet => {
   return new anchor.Wallet(keypair);
 };
 
-const exits = new PublicKey("D467xRNpNHvxbG7nRApDSshnvqVDhL4YjBYqz9TsoKF9");
-const prices = new PublicKey("Dpe9rm2NFSTowGbvrwXccbW7FtGfrQCdu6ogugNW6akK");
+const exits = new PublicKey("7fn18qWcZHXLGuwcb9vGJwLs6Vf6f3nZHBmjgNiJJPe1");
+const prices = new PublicKey("BDRwP7699RGQ7Kj7gowNdh2wuscrcMjZLkaqh7x7tDSx");
 
 async function main() {
   // Initialize connection and wallet
